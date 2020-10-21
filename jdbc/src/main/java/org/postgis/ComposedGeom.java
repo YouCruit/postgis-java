@@ -45,14 +45,12 @@ public abstract class ComposedGeom extends Geometry {
     /* JDK 1.5 Serialization */
     private static final long serialVersionUID = 0x100;
 
-    public static final Geometry[] EMPTY = new Geometry[0];
-
     /**
      * The Array containing the geometries
      * 
      * This is only to be exposed by concrete subclasses, to retain type safety.
      */
-    protected Geometry[] subgeoms = EMPTY;
+    protected Geometry[] subgeoms = createSubGeomArray(0);
 
     /**
      * Constructs an instance with the specified type
@@ -103,6 +101,10 @@ public abstract class ComposedGeom extends Geometry {
             // (which are not OpenGIS compliant)
             return;
         }
+
+	if (value.equals("EMPTY")) {
+	    return;
+	}
 
         String valueNoParans = GeometryTokenizer.removeLeadingAndTrailingStrings(value, "(", ")");
         List<String> tokens = GeometryTokenizer.tokenize(valueNoParans, ',');

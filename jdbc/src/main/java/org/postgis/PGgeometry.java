@@ -94,10 +94,6 @@ public class PGgeometry extends PGobject {
         Geometry result;
         if (value.startsWith("00") || value.startsWith("01")) {
             result = bp.parse(value);
-        } else if (value.endsWith("EMPTY")) {
-            // We have a standard conforming representation for an empty
-            // geometry which is to be parsed as an empty GeometryCollection.
-            result = new GeometryCollection();
         } else if (value.startsWith("MULTIPOLYGON")) {
             result = new MultiPolygon(value, haveM);
         } else if (value.startsWith("MULTILINESTRING")) {
